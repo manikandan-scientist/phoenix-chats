@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="profile.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="profile-page">
+
+<!-- Top bar -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+<h2>Profile</h2>
+
+</div>
+
+
+<!-- Profile Photo -->
+
+<div class="photo-section">
+
+<img id="dp" class="dp">
+
+<button class="edit-btn" onclick="openGallery()">Edit</button>
+
+<input type="file" id="fileInput" accept="image/*" hidden onchange="changePhoto(event)">
+
+</div>
+
+
+<!-- Info -->
+
+<div class="info">
+
+<div class="item" onclick="editName()">
+<p class="title">Name</p>
+<p id="name" class="value"></p>
+</div>
+
+<div class="item" onclick="editAbout()">
+<p class="title">About</p>
+<p id="about" class="value"></p>
+</div>
+
+<div class="item">
+<p class="title">Phone</p>
+<p id="phone" class="value"></p>
+</div>
+
+</div>
+
+
+<!-- Save Button -->
+
+<button class="save-btn" onclick="saveProfile()">Save</button>
+
+</div>
+
+
+<script>
+
+/* Current Values */
+
+let tempName = "";
+let tempAbout = "";
+let tempDP = "";
+
+
+/* Load Saved Data */
+
+let savedName = localStorage.getItem("profileName");
+let savedAbout = localStorage.getItem("profileAbout");
+let savedPhone = localStorage.getItem("phoneNumber");
+let savedDP = localStorage.getItem("profileDP");
+
+tempName = savedName ? savedName : "Phoenix User";
+tempAbout = savedAbout ? savedAbout : "Set About";
+tempDP = savedDP ? savedDP : "phoenix.jpg";
+
+document.getElementById("name").innerText = tempName;
+document.getElementById("about").innerText = tempAbout;
+document.getElementById("phone").innerText =
+savedPhone ? savedPhone : "+91XXXXXXXXXX";
+document.getElementById("dp").src = tempDP;
+
+
+/* Back */
+
+function goBack(){
+window.location.href="settings.html";
+}
+
+
+/* Gallery */
+
+function openGallery(){
+document.getElementById("fileInput").click();
+}
+
+function changePhoto(event){
+
+let file = event.target.files[0];
+
+let reader = new FileReader();
+
+reader.onload = function(){
+
+tempDP = reader.result;
+document.getElementById("dp").src = tempDP;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+
+/* Edit Name */
+
+function editName(){
+
+let newName = prompt("Enter your name", tempName);
+
+if(newName){
+
+tempName = newName;
+
+document.getElementById("name").innerText = tempName;
+
+}
+
+}
+
+
+/* Edit About */
+
+function editAbout(){
+
+let newAbout = prompt("Enter About", tempAbout);
+
+if(newAbout){
+
+tempAbout = newAbout;
+
+document.getElementById("about").innerText = tempAbout;
+
+}
+
+}
+
+
+/* Save Profile */
+
+function saveProfile(){
+
+localStorage.setItem("profileName", tempName);
+localStorage.setItem("profileAbout", tempAbout);
+localStorage.setItem("profileDP", tempDP);
+
+alert("Profile Saved ✅");
+
+}
+
+</script>
+
+</body>
+</html>

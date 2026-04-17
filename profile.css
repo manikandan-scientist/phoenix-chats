@@ -1,0 +1,94 @@
+body{
+margin:0;
+font-family:Arial;
+background:white;
+}
+
+.profile-page{
+max-width:430px;
+margin:auto;
+padding-bottom:80px;
+}
+
+
+/* Top bar */
+
+.topbar{
+display:flex;
+align-items:center;
+padding:15px;
+border-bottom:1px solid #eee;
+}
+
+.back{
+font-size:20px;
+margin-right:15px;
+cursor:pointer;
+}
+
+.topbar h2{
+margin:0;
+}
+
+
+/* Photo */
+
+.photo-section{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:40px 0;
+}
+
+.dp{
+width:130px;
+height:130px;
+border-radius:50%;
+object-fit:cover;
+background:#ddd;
+}
+
+.edit-btn{
+margin-top:15px;
+padding:8px 25px;
+border:none;
+background:#25D366;
+color:white;
+border-radius:20px;
+font-size:16px;
+}
+
+
+/* Info */
+
+.item{
+padding:18px;
+border-bottom:1px solid #eee;
+}
+
+.title{
+color:gray;
+font-size:14px;
+margin:0;
+}
+
+.value{
+margin-top:5px;
+font-size:16px;
+}
+
+
+/* Save Button */
+
+.save-btn{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#25D366;
+color:white;
+border:none;
+padding:12px 60px;
+font-size:18px;
+border-radius:30px;
+}

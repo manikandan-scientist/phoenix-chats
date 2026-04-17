@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="storage.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Storage and data</h2>
+
+</div>
+
+
+<!-- OPTIONS -->
+
+<div class="option">
+<b>Manage storage</b>
+<p id="storageValue">0 MB used</p>
+</div>
+
+<div class="option">
+<b>Network usage</b>
+<p id="networkValue">0 MB used</p>
+</div>
+
+<div class="option" onclick="openSelector('uploadQuality','Media upload quality')">
+<b>Media upload quality</b>
+<p id="uploadQuality">Medium</p>
+</div>
+
+<div class="option" onclick="openSelector('downloadQuality','Media download quality')">
+<b>Media download quality</b>
+<p id="downloadQuality">Medium</p>
+</div>
+
+</div>
+
+
+
+<!-- POPUP SELECTOR -->
+
+<div class="popup" id="popup">
+
+<div class="popup-box">
+
+<h3 id="popupTitle"></h3>
+
+<div class="select-option" onclick="choose(this,'Low')">Low</div>
+<div class="select-option" onclick="choose(this,'Medium')">Medium</div>
+<div class="select-option" onclick="choose(this,'High')">High</div>
+
+<button onclick="save()">OK</button>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* BACK TO SETTINGS PAGE */
+
+function goBack(){
+window.location.href="settings.html";
+}
+
+
+/* STORAGE + NETWORK SAMPLE VALUES */
+
+document.getElementById("storageValue").innerText =
+localStorage.getItem("appStorage") || "25 MB used";
+
+document.getElementById("networkValue").innerText =
+localStorage.getItem("networkUsage") || "120 MB used";
+
+
+/* LOAD SAVED QUALITY */
+
+let up = localStorage.getItem("uploadQuality");
+let down = localStorage.getItem("downloadQuality");
+
+if(up){
+document.getElementById("uploadQuality").innerText = up;
+}
+
+if(down){
+document.getElementById("downloadQuality").innerText = down;
+}
+
+
+/* SELECTOR SYSTEM */
+
+let current="";
+let selected="";
+
+function openSelector(id,title){
+
+current=id;
+
+document.getElementById("popupTitle").innerText = title;
+
+document.getElementById("popup").style.display="flex";
+
+}
+
+function choose(el,val){
+
+document.querySelectorAll(".select-option")
+.forEach(o=>o.style.background="white");
+
+el.style.background="#e8f5e9";
+
+selected=val;
+
+}
+
+function save(){
+
+if(selected!=""){
+
+document.getElementById(current).innerText = selected;
+
+localStorage.setItem(current,selected);
+
+}
+
+document.getElementById("popup").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

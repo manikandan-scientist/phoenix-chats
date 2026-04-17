@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="favorite-contact.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<div class="title-box">
+<h2>Add favorite</h2>
+<p id="contactCount">0 contacts</p>
+</div>
+
+<i class="fa-solid fa-search search" onclick="openSearch()"></i>
+
+</div>
+
+
+<!-- SEARCH BAR -->
+
+<div class="search-box" id="searchBox">
+
+<input type="text" placeholder="Search contact"
+onkeyup="searchContact(this.value)">
+
+</div>
+
+
+<!-- CONTACT TITLE -->
+
+<div class="section-title">
+Contacts on Phoenix
+</div>
+
+
+<!-- CONTACT LIST -->
+
+<div id="contactList">
+
+<p class="empty">No contacts</p>
+
+</div>
+
+
+<!-- OK BUTTON BAR -->
+
+<div class="save-bar">
+
+<button onclick="saveFavorites()">OK</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* BACK */
+
+function goBack(){
+window.location.href="calls.html";
+}
+
+
+/* SEARCH BAR */
+
+function openSearch(){
+
+let box=document.getElementById("searchBox");
+
+box.style.display =
+box.style.display==="block" ? "none" : "block";
+
+}
+
+
+/* SEARCH CONTACT */
+
+function searchContact(text){
+
+let list=document.getElementById("contactList").children;
+
+for(let i=0;i<list.length;i++){
+
+let name=list[i].innerText.toLowerCase();
+
+list[i].style.display =
+name.includes(text.toLowerCase()) ? "flex" : "none";
+
+}
+
+}
+
+
+/* LOAD CONTACTS */
+
+let contacts = JSON.parse(localStorage.getItem("phoneContacts")) || [];
+
+let list = document.getElementById("contactList");
+
+let count = document.getElementById("contactCount");
+
+count.innerText = contacts.length + " contacts";
+
+if(contacts.length===0){
+
+list.innerHTML="<p class='empty'>No contacts</p>";
+
+}else{
+
+list.innerHTML="";
+
+contacts.forEach((c)=>{
+
+let row=document.createElement("div");
+
+row.className="contact-row";
+
+row.innerHTML=`
+
+<input type="checkbox" value="${c.name}">
+
+<img src="phoenix.jpg" class="dp">
+
+<div class="info">
+<b>${c.name}</b>
+<p>${c.number}</p>
+</div>
+
+`;
+
+list.appendChild(row);
+
+});
+
+}
+
+
+/* SAVE FAVORITES */
+
+function saveFavorites(){
+
+let selected=[];
+
+let checks=document.querySelectorAll("input[type=checkbox]:checked");
+
+checks.forEach(c=>{
+selected.push(c.value);
+});
+
+localStorage.setItem("favoriteContacts",JSON.stringify(selected));
+
+alert("Favorites saved");
+
+window.location.href="calls.html";
+
+}
+
+</script>
+
+</body>
+</html>

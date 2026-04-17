@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="chats.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="page">
+
+<!-- Top bar -->
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Chats</h2>
+
+</div>
+
+<!-- DISPLAY -->
+<div class="section-title">Display</div>
+
+<div class="option" onclick="openTheme()">Theme</div>
+<div class="option">Default chat theme</div>
+
+<!-- CHAT SETTINGS -->
+<div class="section-title">Chat settings</div>
+
+<div class="option toggle-option">
+<div>
+<b>Media visibility</b>
+<p class="sub">Show newly downloaded media in your device gallery</p>
+</div>
+
+<div class="toggle" onclick="toggleMedia()" id="mediaToggle"></div>
+</div>
+
+<div class="option" onclick="openFont()">Font size</div>
+
+<!-- OTHER -->
+<div class="section-title">More</div>
+
+<div class="option">Chats backup</div>
+<div class="option">Transfer chats</div>
+<div class="option">Chats history</div>
+
+</div>
+
+
+<!-- THEME MODAL -->
+<div class="modal" id="themeModal">
+
+<div class="box">
+
+<h3>Choose Theme</h3>
+
+<p onclick="selectTheme('system')">System default</p>
+<p onclick="selectTheme('light')">Light</p>
+<p onclick="selectTheme('dark')">Dark</p>
+
+<button onclick="closeTheme()">OK</button>
+
+</div>
+
+</div>
+
+
+<!-- FONT MODAL -->
+<div class="modal" id="fontModal">
+
+<div class="box">
+
+<h3>Font Size</h3>
+
+<p onclick="selectFont('small')">Small</p>
+<p onclick="selectFont('medium')">Medium</p>
+<p onclick="selectFont('large')">Large</p>
+
+<button onclick="closeFont()">OK</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* back */
+function goBack(){
+window.location.href="settings.html";
+}
+
+/* MEDIA TOGGLE */
+let mediaOn = localStorage.getItem("media") === "true";
+
+updateToggle();
+
+function toggleMedia(){
+mediaOn = !mediaOn;
+localStorage.setItem("media", mediaOn);
+updateToggle();
+}
+
+function updateToggle(){
+document.getElementById("mediaToggle").style.background =
+mediaOn ? "#25D366" : "#ccc";
+}
+
+/* THEME */
+function openTheme(){
+document.getElementById("themeModal").style.display="flex";
+}
+
+function closeTheme(){
+document.getElementById("themeModal").style.display="none";
+}
+
+function selectTheme(t){
+localStorage.setItem("theme", t);
+alert("Theme selected: " + t);
+}
+
+/* FONT SIZE */
+function openFont(){
+document.getElementById("fontModal").style.display="flex";
+}
+
+function closeFont(){
+document.getElementById("fontModal").style.display="none";
+}
+
+function selectFont(f){
+localStorage.setItem("fontSize", f);
+alert("Font size: " + f);
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="status-privacy.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Status privacy</h2>
+
+</div>
+
+
+<!-- HEADING -->
+
+<div class="heading">
+
+Audience who can see my status
+
+</div>
+
+
+<!-- OPTION 1 -->
+
+<div class="option" onclick="selectOption('contacts')">
+
+<i class="fa-solid fa-user-group icon"></i>
+
+<div class="text">
+<b>My contacts</b>
+</div>
+
+<div class="radio" id="contacts"></div>
+
+</div>
+
+
+<!-- OPTION 2 -->
+
+<div class="option" onclick="selectOption('exceptions')">
+
+<i class="fa-solid fa-user-group icon"></i>
+
+<div class="text">
+
+<b>My contacts exceptions</b>
+
+<p class="edit" onclick="openContacts(event)">Edit</p>
+
+</div>
+
+<div class="radio" id="exceptions"></div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* back */
+
+function goBack(){
+window.location.href="status.html";
+}
+
+
+/* load saved option */
+
+let saved = localStorage.getItem("statusPrivacy") || "contacts";
+
+setSelected(saved);
+
+
+/* select option */
+
+function selectOption(id){
+
+localStorage.setItem("statusPrivacy", id);
+
+setSelected(id);
+
+}
+
+
+/* show selected */
+
+function setSelected(id){
+
+document.getElementById("contacts").classList.remove("active");
+document.getElementById("exceptions").classList.remove("active");
+
+document.getElementById(id).classList.add("active");
+
+}
+
+
+/* open contacts */
+
+function openContacts(e){
+
+e.stopPropagation();
+
+let contacts = JSON.parse(localStorage.getItem("phoneContacts"));
+
+if(!contacts || contacts.length===0){
+
+alert("No contact");
+
+}else{
+
+alert("Contact selection screen later add pannalam");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

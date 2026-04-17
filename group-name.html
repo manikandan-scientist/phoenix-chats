@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="group-name.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="topbar">
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+<h2>Group name</h2>
+</div>
+
+
+<div class="group-info">
+
+<div class="dp-box">
+
+<img src="phoenix.jpg" id="groupDp">
+
+<input type="file" id="dpInput" accept="image/*" hidden>
+
+<button class="camera" onclick="openGallery()">
+<i class="fa-solid fa-camera"></i>
+</button>
+
+</div>
+
+<input type="text" id="groupName" placeholder="Group name">
+
+</div>
+
+
+<div class="permission-row" onclick="openPermission()">
+<span>Group permissions</span>
+<i class="fa-solid fa-gear"></i>
+</div>
+
+
+<div class="members">
+<b>Members</b>
+<span id="memberCount">0</span>
+</div>
+
+<div id="memberList"></div>
+
+</div>
+
+
+<div class="ok-bar">
+<button onclick="createGroup()">OK</button>
+</div>
+
+
+<script>
+
+function goBack(){
+window.location.href="new-group.html";
+}
+
+function openGallery(){
+document.getElementById("dpInput").click();
+}
+
+document.getElementById("dpInput").addEventListener("change",function(e){
+
+let file=e.target.files[0];
+
+if(file){
+
+let reader=new FileReader();
+
+reader.onload=function(event){
+document.getElementById("groupDp").src=event.target.result;
+}
+
+reader.readAsDataURL(file);
+
+}
+
+});
+
+
+function openPermission(){
+window.location.href="group-permission.html";
+}
+
+
+/* LOAD MEMBERS */
+
+let members=JSON.parse(localStorage.getItem("groupMembers")) || [];
+
+document.getElementById("memberCount").innerText=members.length;
+
+let list=document.getElementById("memberList");
+
+members.forEach(name=>{
+
+let div=document.createElement("div");
+
+div.className="member";
+
+div.innerText=name;
+
+list.appendChild(div);
+
+});
+
+
+/* CREATE GROUP */
+
+function createGroup(){
+
+let name=document.getElementById("groupName").value.trim();
+
+if(name===""){
+alert("Enter group name");
+return;
+}
+
+let dp=document.getElementById("groupDp").src;
+
+/* SAVE GROUP */
+
+let groups=JSON.parse(localStorage.getItem("groups")) || [];
+
+groups.unshift({
+name:name,
+dp:dp
+});
+
+localStorage.setItem("groups",JSON.stringify(groups));
+
+window.location.href="home.html";
+
+}
+
+</script>
+
+</body>
+</html>

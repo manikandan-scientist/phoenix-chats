@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<script>
+
+// if profile already created → open home directly
+if(localStorage.getItem("profileCreated") === "true"){
+window.location.href="home.html";
+}
+
+</script>
+
+<div class="container">
+
+<img src="phoenix.jpg" class="logo">
+
+<h1>Welcome to Phoenix</h1>
+
+<p class="info">
+We use your information to create your account, deliver our services, and help keep Phoenix safe and secure. In settings, you can access, manage, and delete your account information.
+</p>
+
+<button class="agree-btn" onclick="goNext()">Agree and Continue</button>
+
+</div>
+
+<button class="border-btn" onclick="exitApp()">Exit</button>
+
+<script>
+
+function goNext(){
+window.location.href="phone.html";
+}
+
+function exitApp(){
+window.close();
+}
+
+</script>
+
+</body>
+</html>

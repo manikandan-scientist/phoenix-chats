@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="notification.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Notifications</h2>
+
+</div>
+
+
+<!-- MESSAGES -->
+
+<div class="heading">Messages</div>
+
+<div class="option" onclick="openSelector('msgTone','Notification tone',toneList)">
+<b>Notification tone</b>
+<p id="msgTone">Default ringtone</p>
+</div>
+
+<div class="option" onclick="openSelector('msgVibrate','Vibrate',vibrateList)">
+<b>Vibrate</b>
+<p id="msgVibrate">Default</p>
+</div>
+
+<div class="option" onclick="openSelector('msgLight','Light',lightList)">
+<b>Light</b>
+<p id="msgLight">White</p>
+</div>
+
+
+<!-- GROUPS -->
+
+<div class="heading">Groups</div>
+
+<div class="option" onclick="openSelector('grpTone','Notification tone',toneList)">
+<b>Notification tone</b>
+<p id="grpTone">Default ringtone</p>
+</div>
+
+<div class="option" onclick="openSelector('grpVibrate','Vibrate',vibrateList)">
+<b>Vibrate</b>
+<p id="grpVibrate">Default</p>
+</div>
+
+<div class="option" onclick="openSelector('grpLight','Light',lightList)">
+<b>Light</b>
+<p id="grpLight">White</p>
+</div>
+
+
+<!-- CALLS -->
+
+<div class="heading">Calls</div>
+
+<div class="option" onclick="openSelector('callTone','Ringtone',callToneList)">
+<b>Ringtone</b>
+<p id="callTone">Default ringtone</p>
+</div>
+
+<div class="option" onclick="openSelector('callVibrate','Vibrate',vibrateList)">
+<b>Vibrate</b>
+<p id="callVibrate">Default</p>
+</div>
+
+
+<!-- STATUS -->
+
+<div class="heading">Status</div>
+
+<div class="option" onclick="openSelector('statusTone','Notification tone',toneList)">
+<b>Notification tone</b>
+<p id="statusTone">Default ringtone</p>
+</div>
+
+<div class="option" onclick="openSelector('statusVibrate','Vibrate',vibrateList)">
+<b>Vibrate</b>
+<p id="statusVibrate">Default</p>
+</div>
+
+</div>
+
+
+
+<!-- SELECTOR POPUP -->
+
+<div class="popup" id="popup">
+
+<div class="popup-box">
+
+<h3 id="popupTitle"></h3>
+
+<div id="optionList"></div>
+
+<div class="add" id="addTone" onclick="addTone()">+ Add ringtone</div>
+
+<button onclick="saveSelection()">OK</button>
+
+</div>
+
+</div>
+
+
+<input type="file" id="fileInput" accept="audio/*" hidden>
+
+
+<script>
+
+function goBack(){
+window.location.href="settings.html";
+}
+
+/* OPTION LISTS */
+
+const toneList = [
+"Default ringtone","None","Arrangement","Arrival","Beautiful touching",
+"Bell","Bird","Clockwork doll","Cuckoo","Ding","Fine day","Happy",
+"Little","Money","Sound of the sea","Sunrise view","Sunshine",
+"Tick","Twist","Yearning"
+];
+
+const callToneList = [
+"Default ringtone","None","Blue Meteor","Elec Synth",
+"High Didi","Occarina","Resound","Sunrise view",
+"Tunk","Xylophone Roll"
+];
+
+const vibrateList = ["Off","Default","Short","Long"];
+
+const lightList = ["None","White","Red","Green","Blue"];
+
+
+/* SELECTOR SYSTEM */
+
+let currentSetting="";
+let selectedValue="";
+
+function openSelector(setting,title,list){
+
+currentSetting = setting;
+
+document.getElementById("popupTitle").innerText = title;
+
+let container = document.getElementById("optionList");
+
+container.innerHTML="";
+
+list.forEach(item=>{
+
+let div=document.createElement("div");
+
+div.className="select-option";
+
+div.innerText=item;
+
+div.onclick=()=>selectOption(div,item);
+
+container.appendChild(div);
+
+});
+
+/* show add ringtone only for tones */
+
+document.getElementById("addTone").style.display =
+(title.includes("tone") || title.includes("Ringtone")) ? "block":"none";
+
+document.getElementById("popup").style.display="flex";
+
+}
+
+function selectOption(el,val){
+
+document.querySelectorAll(".select-option")
+.forEach(o=>o.style.background="white");
+
+el.style.background="#e8f5e9";
+
+selectedValue = val;
+
+}
+
+function saveSelection(){
+
+if(selectedValue!==""){
+
+document.getElementById(currentSetting).innerText = selectedValue;
+
+localStorage.setItem(currentSetting,selectedValue);
+
+}
+
+document.getElementById("popup").style.display="none";
+
+}
+
+
+/* LOAD SAVED VALUES */
+
+[
+"msgTone","msgVibrate","msgLight",
+"grpTone","grpVibrate","grpLight",
+"callTone","callVibrate",
+"statusTone","statusVibrate"
+].forEach(id=>{
+
+let saved = localStorage.getItem(id);
+
+if(saved){
+document.getElementById(id).innerText=saved;
+}
+
+});
+
+
+/* ADD RINGTONE */
+
+function addTone(){
+document.getElementById("fileInput").click();
+}
+
+</script>
+
+</body>
+</html>

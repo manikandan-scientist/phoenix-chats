@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="phoenix.jpg" class="logo">
+
+<h1>Welcome to Phoenix</h1>
+
+<p class="subtitle">Enter Phone Number</p>
+
+<div class="phone-box">
+<span>+91</span>
+<input type="tel" id="phone" placeholder="XXXXXXXXXX">
+</div>
+
+<p id="error" class="error"></p>
+
+<button class="green-btn" onclick="validatePhone()">Next</button>
+
+</div>
+
+<button class="border-btn" onclick="goBack()">Back</button>
+
+<script>
+
+function validatePhone(){
+
+let phone = document.getElementById("phone").value;
+let error = document.getElementById("error");
+
+if(phone.length === 10 && /^[0-9]+$/.test(phone)){
+window.location.href="login.html";
+}
+else{
+error.innerText = "Please enter valid phone number";
+}
+
+}
+
+function goBack(){
+window.location.href="index.html";
+}
+
+</script>
+
+</body>
+</html>

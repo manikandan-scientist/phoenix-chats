@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="group-permission.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Group permission</h2>
+
+</div>
+
+
+<!-- HEADING -->
+
+<div class="heading">
+Members can
+</div>
+
+
+<!-- EDIT SETTINGS -->
+
+<div class="row">
+
+<i class="fa-solid fa-pen-to-square icon"></i>
+
+<span class="text">Edit group settings</span>
+
+<label class="switch">
+<input type="checkbox" id="editToggle">
+<span class="slider"></span>
+</label>
+
+</div>
+
+
+<!-- ADD MEMBERS -->
+
+<div class="row">
+
+<i class="fa-solid fa-user-plus icon"></i>
+
+<span class="text">Add other members</span>
+
+<label class="switch">
+<input type="checkbox" id="addToggle">
+<span class="slider"></span>
+</label>
+
+</div>
+
+
+<!-- INVITE LINK -->
+
+<div class="row">
+
+<i class="fa-solid fa-link icon"></i>
+
+<span class="text">Invite via link or QR code</span>
+
+<label class="switch">
+<input type="checkbox" id="linkToggle">
+<span class="slider"></span>
+</label>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* BACK */
+
+function goBack(){
+window.location.href="group-name.html";
+}
+
+
+/* LOAD SAVED SETTINGS */
+
+let editToggle=document.getElementById("editToggle");
+let addToggle=document.getElementById("addToggle");
+let linkToggle=document.getElementById("linkToggle");
+
+editToggle.checked =
+JSON.parse(localStorage.getItem("perm_edit")) || false;
+
+addToggle.checked =
+JSON.parse(localStorage.getItem("perm_add")) || false;
+
+linkToggle.checked =
+JSON.parse(localStorage.getItem("perm_link")) || false;
+
+
+/* SAVE WHEN CHANGED */
+
+editToggle.onchange=function(){
+localStorage.setItem("perm_edit",editToggle.checked);
+}
+
+addToggle.onchange=function(){
+localStorage.setItem("perm_add",addToggle.checked);
+}
+
+linkToggle.onchange=function(){
+localStorage.setItem("perm_link",linkToggle.checked);
+}
+
+</script>
+
+</body>
+</html>

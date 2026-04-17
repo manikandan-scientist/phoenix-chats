@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="create-profile.css">
+</head>
+
+<body>
+
+<div class="page">
+
+<h2>Create your Phoenix Profile</h2>
+
+<!-- DP -->
+<div class="dp-circle" onclick="openGallery()">
+
+<span id="plus">Add Profile</span>
+<img id="preview">
+
+</div>
+
+<input type="file" id="file" accept="image/*" hidden onchange="loadImage(event)">
+
+<!-- NAME -->
+<p class="label">Name</p>
+<input type="text" id="name" class="input" placeholder="Enter your name" oninput="checkName()">
+
+<!-- ABOUT -->
+<p class="label">About</p>
+<input type="text" id="about" class="input" placeholder="Enter about" disabled>
+
+<!-- NEXT -->
+<button class="next-btn" id="nextBtn" onclick="goHome()" disabled>Next</button>
+
+</div>
+
+
+<script>
+
+let nameOk = false;
+
+/* Open gallery */
+function openGallery(){
+document.getElementById("file").click();
+}
+
+/* Load image */
+function loadImage(event){
+
+let img = document.getElementById("preview");
+let plus = document.getElementById("plus");
+
+img.src = URL.createObjectURL(event.target.files[0]);
+img.style.display = "block";
+plus.style.display = "none";
+
+}
+
+/* Name check */
+function checkName(){
+
+let name = document.getElementById("name").value;
+let about = document.getElementById("about");
+let nextBtn = document.getElementById("nextBtn");
+
+if(name.length > 0){
+about.disabled = false;
+nameOk = true;
+}else{
+about.disabled = true;
+about.value = "";
+nameOk = false;
+}
+
+updateButton();
+}
+
+/* enable next only if name exists */
+document.getElementById("about").addEventListener("input", updateButton);
+
+function updateButton(){
+
+let name = document.getElementById("name").value;
+let about = document.getElementById("about").value;
+let nextBtn = document.getElementById("nextBtn");
+
+if(name.length > 0){
+nextBtn.disabled = false;
+}else{
+nextBtn.disabled = true;
+}
+}
+
+/* Save + go home */
+function goHome(){
+
+let name = document.getElementById("name").value;
+let about = document.getElementById("about").value;
+let dp = document.getElementById("preview").src;
+
+if(name.length === 0){
+alert("Please enter name");
+return;
+}
+
+localStorage.setItem("profileName", name);
+localStorage.setItem("profileAbout", about);
+localStorage.setItem("profileDP", dp);
+localStorage.setItem("profileCreated","true");
+
+window.location.href="home.html";
+
+}
+
+</script>
+
+</body>
+</html>

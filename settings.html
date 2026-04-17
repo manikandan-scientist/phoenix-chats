@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="settings.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="settings">
+
+<!-- Top Bar -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goHome()"></i>
+
+<h2>Settings</h2>
+
+</div>
+
+
+<!-- Profile -->
+
+<div class="profile" onclick="openProfile()">
+
+<img id="dp" class="profile-pic">
+
+<div class="profile-info">
+
+<h3 id="username"></h3>
+<p id="about"></p>
+
+</div>
+
+</div>
+
+
+<!-- Options -->
+
+<div class="option" onclick="openAccount()">Account</div>
+
+<div class="option" onclick="openChats()">Chats</div>
+
+<div class="option" onclick="openNotifications()">Notifications</div>
+
+<div class="option" onclick="openStorage()">Storage</div>
+
+<div class="option" onclick="openLanguage()">App Language</div>
+
+<div class="option" onclick="inviteFriend()">Invite a Friend</div>
+
+</div>
+
+
+<script>
+
+/* Load Profile Data */
+
+let name = localStorage.getItem("profileName");
+let about = localStorage.getItem("profileAbout");
+let dp = localStorage.getItem("profileDP");
+
+document.getElementById("username").innerText =
+name ? name : "Phoenix User";
+
+document.getElementById("about").innerText =
+about ? about : "Hey there! I am using Phoenix";
+
+document.getElementById("dp").src =
+dp ? dp : "phoenix.jpg";
+
+
+/* Navigation */
+
+function goHome(){
+window.location.href="home.html";
+}
+
+function openProfile(){
+window.location.href="profile.html";
+}
+
+function openAccount(){
+window.location.href="account.html";
+}
+
+function openChats(){
+window.location.href="chats.html";
+}
+
+function openNotifications(){
+window.location.href="notification.html";
+}
+
+function openStorage(){
+window.location.href="storage.html";
+}
+
+function openLanguage(){
+window.location.href="language.html";
+}
+
+
+/* Invite Friends Share */
+
+function inviteFriend(){
+
+let appLink = "https://yourapplink.com";  // later change panna
+let message = "Hey! Phoenix chat app use pannunga 👇\n" + appLink;
+
+if(navigator.share){
+
+navigator.share({
+title:"Phoenix App",
+text:message,
+url:appLink
+});
+
+}else{
+
+prompt("Copy this link and share:", appLink);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

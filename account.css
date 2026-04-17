@@ -1,0 +1,58 @@
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+display:flex;
+justify-content:center;
+}
+
+.page{
+width:100%;
+max-width:400px;
+background:white;
+min-height:100vh;
+}
+
+
+/* Top bar */
+
+.topbar{
+display:flex;
+align-items:center;
+padding:15px;
+border-bottom:1px solid #eee;
+}
+
+.topbar h2{
+margin:0;
+margin-left:10px;
+font-size:20px;
+}
+
+.back{
+font-size:20px;
+cursor:pointer;
+}
+
+
+/* Options */
+
+.option{
+padding:16px 20px;
+border-bottom:1px solid #eee;
+font-size:16px;
+cursor:pointer;
+background:white;
+}
+
+.option:hover{
+background:#f2f2f2;
+}
+
+
+/* Delete */
+
+.delete{
+color:red;
+font-weight:bold;
+}

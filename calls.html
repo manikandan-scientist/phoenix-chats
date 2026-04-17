@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="calls.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<div class="title">Calls</div>
+
+<div class="icons">
+
+<i class="fa-solid fa-search" onclick="openSearch()"></i>
+
+<div class="menu">
+
+<i class="fa-solid fa-ellipsis-vertical" onclick="toggleMenu()"></i>
+
+<div class="dropdown" id="menu">
+
+<p onclick="clearCalls()">Clear call log</p>
+<p onclick="openSettings()">Settings</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SEARCH BAR -->
+
+<div class="search-box" id="searchBox">
+
+<input type="text" placeholder="Search name or number"
+onkeyup="searchCall(this.value)">
+
+</div>
+
+
+<!-- QUICK OPTIONS -->
+
+<div class="quick">
+
+<div class="quick-btn" onclick="openNewCall()">
+<i class="fa-solid fa-phone"></i>
+<p>Call</p>
+</div>
+
+<div class="quick-btn" onclick="openKeypad()">
+<i class="fa-solid fa-keyboard"></i>
+<p>Keypad</p>
+</div>
+
+<div class="quick-btn" onclick="openFavorite()">
+<i class="fa-solid fa-heart"></i>
+<p>Favorite</p>
+</div>
+
+</div>
+
+
+<!-- RECENT -->
+
+<div class="section-title">Recent</div>
+
+<div id="callList">
+
+<p class="empty" id="noCalls">No calls yet</p>
+
+</div>
+
+
+<!-- DELETE BAR -->
+
+<div class="delete-bar" id="deleteBar">
+
+<button onclick="confirmDelete()">Delete</button>
+<button onclick="cancelDelete()">Cancel</button>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-bar">
+
+<div class="tab" onclick="openChats()">
+<i class="fa-solid fa-comment"></i>
+<p>Chats</p>
+</div>
+
+<div class="tab" onclick="openStatus()">
+<i class="fa-solid fa-circle"></i>
+<p>Status</p>
+</div>
+
+<div class="tab active">
+<i class="fa-solid fa-phone"></i>
+<p>Calls</p>
+</div>
+
+<div class="tab" onclick="openAdd()">
+<i class="fa-solid fa-user-plus"></i>
+<p>Add New</p>
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* MENU */
+
+function toggleMenu(){
+
+let menu=document.getElementById("menu");
+
+menu.style.display =
+menu.style.display==="block" ? "none" : "block";
+
+}
+
+
+/* SEARCH */
+
+function openSearch(){
+
+let box=document.getElementById("searchBox");
+
+box.style.display =
+box.style.display==="block" ? "none" : "block";
+
+}
+
+function searchCall(text){
+
+let list=document.getElementById("callList").children;
+
+for(let i=0;i<list.length;i++){
+
+let name=list[i].innerText.toLowerCase();
+
+list[i].style.display =
+name.includes(text.toLowerCase()) ? "flex" : "none";
+
+}
+
+}
+
+
+/* NAVIGATION */
+
+function openSettings(){
+window.location.href="settings.html";
+}
+
+function openNewCall(){
+window.location.href="new-call.html";
+}
+
+function openFavorite(){
+window.location.href="favorite-contact.html";
+}
+
+function openKeypad(){
+alert("Phone keypad feature later add pannalam");
+}
+
+function openChats(){
+window.location.href="home.html";
+}
+
+function openStatus(){
+window.location.href="status.html";
+}
+
+function openAdd(){
+window.location.href="add.html";
+}
+
+
+/* CLEAR CALL LOG */
+
+function clearCalls(){
+
+if(confirm("Clear all call log?")){
+
+document.getElementById("callList").innerHTML =
+"<p class='empty'>No calls yet</p>";
+
+}
+
+}
+
+
+/* SELECT CALL */
+
+let selectedCall=null;
+
+function selectCall(el){
+
+selectedCall=el;
+
+document.getElementById("deleteBar").style.display="flex";
+
+}
+
+
+/* DELETE */
+
+function confirmDelete(){
+
+if(selectedCall){
+
+selectedCall.remove();
+
+}
+
+document.getElementById("deleteBar").style.display="none";
+
+}
+
+function cancelDelete(){
+
+selectedCall=null;
+
+document.getElementById("deleteBar").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

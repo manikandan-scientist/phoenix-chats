@@ -1,0 +1,88 @@
+body{
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+display:flex;
+justify-content:center;
+}
+
+.app{
+width:100%;
+max-width:400px;
+background:white;
+min-height:100vh;
+}
+
+/* topbar */
+
+.topbar{
+display:flex;
+align-items:center;
+padding:15px;
+border-bottom:1px solid #eee;
+}
+
+.back{
+font-size:20px;
+cursor:pointer;
+}
+
+.topbar h2{
+margin:0;
+margin-left:10px;
+font-size:20px;
+}
+
+/* heading */
+
+.heading{
+padding:15px;
+font-size:14px;
+color:gray;
+border-bottom:1px solid #eee;
+}
+
+/* options */
+
+.option{
+display:flex;
+align-items:center;
+padding:16px;
+border-bottom:1px solid #eee;
+cursor:pointer;
+}
+
+.icon{
+font-size:20px;
+margin-right:12px;
+color:#555;
+}
+
+.text{
+flex:1;
+}
+
+.text b{
+font-size:16px;
+}
+
+.edit{
+margin-top:4px;
+font-size:13px;
+color:#25D366;
+cursor:pointer;
+}
+
+/* radio */
+
+.radio{
+width:20px;
+height:20px;
+border:2px solid #aaa;
+border-radius:50%;
+}
+
+.radio.active{
+border-color:#25D366;
+background:#25D366;
+}

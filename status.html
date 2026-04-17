@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="status.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<div class="title">Status</div>
+
+<div class="icons">
+
+<i class="fa-solid fa-search"></i>
+
+<div class="menu">
+
+<i class="fa-solid fa-ellipsis-vertical" onclick="toggleMenu()"></i>
+
+<div class="dropdown" id="menu">
+
+<p onclick="openPrivacy()">Status privacy</p>
+<p onclick="openSettings()">Settings</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- YOUR STATUS -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="status.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- YOUR STATUS -->
+
+<div class="section-title">Your status</div>
+
+<div class="status-row" onclick="handleMyStatus()">
+
+<img src="phoenix.jpg" class="dp">
+
+<div class="status-text">
+<b>My status</b>
+<p id="statusText">Tap to add status update</p>
+</div>
+
+<div class="add-btn" onclick="openGallery(event)">+</div>
+
+</div>
+
+
+<!-- RECENT -->
+
+<div class="section-title">Recent Updates</div>
+
+<div id="recent">
+
+<p class="empty">No status</p>
+
+</div>
+
+
+<!-- VIEWED -->
+
+<div class="section-title">Viewed Updates</div>
+
+<div id="viewed"></div>
+
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-bar">
+
+<div class="tab" onclick="openChats()">
+<i class="fa-solid fa-comment"></i>
+<p>Chats</p>
+</div>
+
+<div class="tab active">
+<i class="fa-solid fa-circle"></i>
+<p>Status</p>
+</div>
+
+<div class="tab" onclick="openCalls()">
+<i class="fa-solid fa-phone"></i>
+<p>Calls</p>
+</div>
+
+<div class="tab" onclick="openAdd()">
+<i class="fa-solid fa-user-plus"></i>
+<p>Add New</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- hidden gallery input -->
+
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+
+
+<script>
+
+/* menu */
+
+function toggleMenu(){
+
+let menu = document.getElementById("menu");
+
+menu.style.display =
+menu.style.display === "block" ? "none" : "block";
+
+}
+
+/* open pages */
+
+function openPrivacy(){
+window.location.href="status-privacy.html";
+}
+
+function openSettings(){
+window.location.href="settings.html";
+}
+
+
+/* open gallery */
+
+function openGallery(e){
+
+e.stopPropagation();
+
+document.getElementById("fileInput").click();
+
+}
+
+
+/* profile click */
+
+function handleMyStatus(){
+
+let status = localStorage.getItem("myStatus");
+
+if(status){
+
+window.open(status,"_blank");
+
+}else{
+
+document.getElementById("fileInput").click();
+
+}
+
+}
+
+
+/* save status */
+
+document.getElementById("fileInput").addEventListener("change",function(){
+
+let file = this.files[0];
+
+if(file){
+
+let url = URL.createObjectURL(file);
+
+localStorage.setItem("myStatus",url);
+
+document.getElementById("statusText").innerText =
+"Tap to view your status";
+
+}
+
+});
+
+
+/* move to viewed */
+
+function viewStatus(el){
+document.getElementById("viewed").appendChild(el);
+}
+
+
+/* navigation */
+
+function openChats(){
+window.location.href="home.html";
+}
+
+function openCalls(){
+window.location.href="calls.html";
+}
+
+function openAdd(){
+window.location.href="add.html";
+}
+
+</script>
+
+</body>
+</html>

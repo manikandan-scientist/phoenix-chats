@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="account.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="page">
+
+<!-- Top bar -->
+
+<div class="topbar">
+
+<i class="fa-solid fa-arrow-left back" onclick="goBack()"></i>
+
+<h2>Account</h2>
+
+</div>
+
+
+<!-- Options -->
+
+<div class="option">Security notifications</div>
+
+<div class="option" onclick="openEmail()">Email address</div>
+
+<div class="option">Change Phone number</div>
+
+<div class="option">Add account</div>
+
+<div class="option delete" onclick="deleteAccount()">Delete account</div>
+
+</div>
+
+
+<script>
+
+/* back */
+
+function goBack(){
+window.location.href="settings.html";
+}
+
+/* email page */
+
+function openEmail(){
+window.location.href="email.html";
+}
+
+/* delete account */
+
+function deleteAccount(){
+
+let confirmDelete = confirm("Delete account? This cannot be undone!");
+
+if(confirmDelete){
+
+// clear all data
+localStorage.clear();
+
+// mark reset state
+localStorage.setItem("appDeleted","true");
+
+// go to index
+window.location.href="index.html";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

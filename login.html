@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="phoenix.jpg" class="logo">
+
+<h1>Welcome to Phoenix</h1>
+
+<p class="subtitle">Enter SMS Code</p>
+
+<input class="code-box" id="code" type="text" placeholder="Enter Code">
+
+<button class="green-btn" onclick="login()">Next</button>
+
+</div>
+
+<button class="border-btn" onclick="goBack()">Back</button>
+
+<script>
+
+function login(){
+
+let code = document.getElementById("code").value;
+
+if(code.length > 0){
+
+// LOGIN SUCCESS → CREATE PROFILE PAGE
+window.location.href = "create-profile.html";
+
+}
+else{
+
+alert("Please enter SMS code");
+
+}
+
+}
+
+function goBack(){
+window.location.href="phone.html";
+}
+
+</script>
+
+</body>
+</html>
