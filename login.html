@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 </head>
 
 <body>
@@ -17,7 +22,7 @@
 
 <input class="code-box" id="code" type="text" placeholder="Enter Code">
 
-<button class="green-btn" onclick="login()">Next</button>
+<button class="green-btn" onclick="verifyOTP()">Next</button>
 
 </div>
 
@@ -25,23 +30,62 @@
 
 <script>
 
-function login(){
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
+  authDomain: "phoenix-6c3b7.firebaseapp.com",
+  projectId: "phoenix-6c3b7",
+  storageBucket: "phoenix-6c3b7.firebasestorage.app",
+  messagingSenderId: "914099693715",
+  appId: "1:914099693715:web:372c71c13c5c6f060c4566",
+  measurementId: "G-5WLB8BML48"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+
+/* VERIFY OTP */
+
+function verifyOTP(){
 
 let code = document.getElementById("code").value;
 
-if(code.length > 0){
-
-// LOGIN SUCCESS → CREATE PROFILE PAGE
-window.location.href = "create-profile.html";
-
-}
-else{
-
-alert("Please enter SMS code");
-
+if(code.length == 0){
+alert("Please enter OTP");
+return;
 }
 
+let confirmationResult = window.confirmationResult;
+
+if(!confirmationResult){
+alert("OTP session expired. Please request OTP again.");
+window.location.href="phone.html";
+return;
 }
+
+confirmationResult.confirm(code)
+
+.then(function(result){
+
+let user = result.user;
+
+localStorage.setItem("userUID", user.uid);
+
+alert("Login success");
+
+window.location.href="create-profile.html";
+
+})
+
+.catch(function(error){
+
+alert("Invalid OTP");
+
+});
+
+}
+
 
 function goBack(){
 window.location.href="phone.html";

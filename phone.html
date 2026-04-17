@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 </head>
 
 <body>
@@ -20,9 +25,11 @@
 <input type="tel" id="phone" placeholder="XXXXXXXXXX">
 </div>
 
+<div id="recaptcha-container"></div>
+
 <p id="error" class="error"></p>
 
-<button class="green-btn" onclick="validatePhone()">Next</button>
+<button class="green-btn" onclick="sendOTP()">Next</button>
 
 </div>
 
@@ -30,16 +37,65 @@
 
 <script>
 
-function validatePhone(){
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
+  authDomain: "phoenix-6c3b7.firebaseapp.com",
+  projectId: "phoenix-6c3b7",
+  storageBucket: "phoenix-6c3b7.firebasestorage.app",
+  messagingSenderId: "914099693715",
+  appId: "1:914099693715:web:372c71c13c5c6f060c4566",
+  measurementId: "G-5WLB8BML48"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+/* RECAPTCHA */
+
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+'recaptcha-container',
+{
+size: "normal"
+}
+);
+
+/* SEND OTP */
+
+function sendOTP(){
 
 let phone = document.getElementById("phone").value;
-let error = document.getElementById("error");
+let errorText = document.getElementById("error");
 
-if(phone.length === 10 && /^[0-9]+$/.test(phone)){
-window.location.href="login.html";
+if(phone.length === 10){
+
+let fullNumber = "+91" + phone;
+
+firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
+
+.then(function(confirmationResult){
+
+window.confirmationResult = confirmationResult;
+
+localStorage.setItem("phoneNumber", fullNumber);
+
+window.location.href = "login.html";
+
+})
+
+.catch(function(err){
+
+errorText.innerText = "OTP send failed";
+
+console.log(err);
+
+});
+
 }
 else{
-error.innerText = "Please enter valid phone number";
+
+errorText.innerText = "Please enter valid phone number";
+
 }
 
 }
