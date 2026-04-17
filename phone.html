@@ -51,7 +51,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* INVISIBLE RECAPTCHA (IMPORTANT FIX) */
+/* FIXED RECAPTCHA (IMPORTANT) */
 
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
 'recaptcha-container',
@@ -70,7 +70,7 @@ let phone = document.getElementById("phone").value;
 let errorText = document.getElementById("error");
 
 if(phone.length !== 10){
-errorText.innerText = "Enter valid phone number";
+errorText.innerText = "Enter valid 10 digit number";
 return;
 }
 
@@ -79,18 +79,20 @@ let fullNumber = "+91" + phone;
 firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
 .then(function(confirmationResult){
 
-    // SAVE SESSION
-    window.confirmationResult = confirmationResult;
-    localStorage.setItem("phoneNumber", fullNumber);
-    localStorage.setItem("otpSession", "active");
+window.confirmationResult = confirmationResult;
 
-    // GO TO LOGIN PAGE
-    window.location.href = "login.html";
+localStorage.setItem("phoneNumber", fullNumber);
+localStorage.setItem("otpSession", "active");
+
+/* GO TO LOGIN PAGE */
+window.location.href = "login.html";
 
 })
-.catch(function(err){
-    console.log(err);
-    errorText.innerText = "OTP send failed";
+.catch(function(error){
+
+console.log(error);
+errorText.innerText = error.message;
+
 });
 
 }

@@ -44,12 +44,10 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* CHECK SESSION */
+/* SESSION CHECK */
 
-let session = localStorage.getItem("otpSession");
-
-if(!session){
-alert("Session expired. Please login again");
+if(!localStorage.getItem("otpSession")){
+alert("Session expired");
 window.location.href="phone.html";
 }
 
@@ -86,6 +84,7 @@ window.location.href="create-profile.html";
 })
 .catch(function(error){
 alert("Invalid OTP");
+console.log(error);
 });
 
 }
