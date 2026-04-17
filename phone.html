@@ -25,6 +25,8 @@
 <input type="tel" id="phone" placeholder="XXXXXXXXXX">
 </div>
 
+<div id="recaptcha-container"></div>
+
 <p id="error" class="error"></p>
 
 <button class="green-btn" onclick="sendOTP()">Next</button>
@@ -38,7 +40,7 @@
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
+  apiKey: "AIzaSyB-f4usYcUBlCaeD-UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
   projectId: "phoenix-6c3b7",
   storageBucket: "phoenix-6c3b7.firebasestorage.app",
@@ -49,10 +51,10 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* AUTO INVISIBLE RECAPTCHA */
+/* INVISIBLE RECAPTCHA (IMPORTANT FIX) */
 
-let recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-'container',
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+'recaptcha-container',
 {
   size: 'invisible'
 }
@@ -65,29 +67,30 @@ recaptchaVerifier.render();
 function sendOTP(){
 
 let phone = document.getElementById("phone").value;
-let error = document.getElementById("error");
+let errorText = document.getElementById("error");
 
 if(phone.length !== 10){
-error.innerText = "Enter valid phone number";
+errorText.innerText = "Enter valid phone number";
 return;
 }
 
 let fullNumber = "+91" + phone;
 
-firebase.auth().signInWithPhoneNumber(fullNumber, recaptchaVerifier)
+firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
 .then(function(confirmationResult){
 
-window.confirmationResult = confirmationResult;
+    // SAVE SESSION
+    window.confirmationResult = confirmationResult;
+    localStorage.setItem("phoneNumber", fullNumber);
+    localStorage.setItem("otpSession", "active");
 
-localStorage.setItem("phoneNumber", fullNumber);
-
-/* GO TO LOGIN PAGE */
-window.location.href = "login.html";
+    // GO TO LOGIN PAGE
+    window.location.href = "login.html";
 
 })
 .catch(function(err){
-error.innerText = "OTP send failed";
-console.log(err);
+    console.log(err);
+    errorText.innerText = "OTP send failed";
 });
 
 }

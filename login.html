@@ -33,7 +33,7 @@
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
+  apiKey: "AIzaSyB-f4usYcUBlCaeD-UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
   projectId: "phoenix-6c3b7",
   storageBucket: "phoenix-6c3b7.firebasestorage.app",
@@ -44,6 +44,14 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+/* CHECK SESSION */
+
+let session = localStorage.getItem("otpSession");
+
+if(!session){
+alert("Session expired. Please login again");
+window.location.href="phone.html";
+}
 
 /* VERIFY OTP */
 
@@ -51,21 +59,20 @@ function verifyOTP(){
 
 let code = document.getElementById("code").value;
 
-if(code.length == 0){
-alert("Please enter OTP");
+if(code.length === 0){
+alert("Enter OTP");
 return;
 }
 
 let confirmationResult = window.confirmationResult;
 
 if(!confirmationResult){
-alert("OTP session expired. Please request OTP again.");
+alert("OTP expired. Try again");
 window.location.href="phone.html";
 return;
 }
 
 confirmationResult.confirm(code)
-
 .then(function(result){
 
 let user = result.user;
@@ -77,15 +84,11 @@ alert("Login success");
 window.location.href="create-profile.html";
 
 })
-
 .catch(function(error){
-
 alert("Invalid OTP");
-
 });
 
 }
-
 
 function goBack(){
 window.location.href="phone.html";
