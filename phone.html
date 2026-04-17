@@ -25,8 +25,6 @@
 <input type="tel" id="phone" placeholder="XXXXXXXXXX">
 </div>
 
-<div id="recaptcha-container"></div>
-
 <p id="error" class="error"></p>
 
 <button class="green-btn" onclick="sendOTP()">Next</button>
@@ -51,52 +49,46 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* RECAPTCHA */
+/* AUTO INVISIBLE RECAPTCHA */
 
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-'recaptcha-container',
+let recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+'container',
 {
-size: "normal"
+  size: 'invisible'
 }
 );
+
+recaptchaVerifier.render();
 
 /* SEND OTP */
 
 function sendOTP(){
 
 let phone = document.getElementById("phone").value;
-let errorText = document.getElementById("error");
+let error = document.getElementById("error");
 
-if(phone.length === 10){
+if(phone.length !== 10){
+error.innerText = "Enter valid phone number";
+return;
+}
 
 let fullNumber = "+91" + phone;
 
-firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
-
+firebase.auth().signInWithPhoneNumber(fullNumber, recaptchaVerifier)
 .then(function(confirmationResult){
 
 window.confirmationResult = confirmationResult;
 
 localStorage.setItem("phoneNumber", fullNumber);
 
+/* GO TO LOGIN PAGE */
 window.location.href = "login.html";
 
 })
-
 .catch(function(err){
-
-errorText.innerText = "OTP send failed";
-
+error.innerText = "OTP send failed";
 console.log(err);
-
 });
-
-}
-else{
-
-errorText.innerText = "Please enter valid phone number";
-
-}
 
 }
 

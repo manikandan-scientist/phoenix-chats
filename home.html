@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="home.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- TOP BAR -->
+
+<div class="topbar">
+
+<div class="title">Phoenix</div>
+
+<div class="icons">
+
+<i class="fa-solid fa-camera" onclick="openCamera()"></i>
+
+<div class="menu">
+
+<i class="fa-solid fa-ellipsis-vertical" onclick="toggleMenu()"></i>
+
+<div class="dropdown" id="menu">
+
+<p onclick="openNewGroup()">New group</p>
+<p onclick="readAll()">Read all</p>
+<p onclick="openSettings()">Settings</p>
+<p onclick="exitApp()">Exit</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+<input type="text" placeholder="Search">
+</div>
+
+
+<!-- CHAT LIST -->
+
+<div class="contacts">
+
+<p class="empty">No chats yet</p>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-bar">
+
+<div class="tab active">
+<i class="fa-solid fa-comment"></i>
+<p>Chats</p>
+</div>
+
+<div class="tab" onclick="openStatus()">
+<i class="fa-solid fa-circle"></i>
+<p>Status</p>
+</div>
+
+<div class="tab" onclick="openCalls()">
+<i class="fa-solid fa-phone"></i>
+<p>Calls</p>
+</div>
+
+<div class="tab" onclick="openAdd()">
+<i class="fa-solid fa-user-plus"></i>
+<p>Add New</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+
+let menu=document.getElementById("menu");
+
+menu.style.display=
+menu.style.display==="block"?"none":"block";
+
+}
+
+function openCamera(){
+
+alert("Camera will open in mobile app version");
+
+}
+
+function openNewGroup(){
+
+window.location.href="new-group.html";
+
+}
+
+function readAll(){
+
+alert("All messages marked as read");
+
+}
+
+function openSettings(){
+
+window.location.href="settings.html";
+
+}
+
+function openStatus(){
+
+window.location.href="status.html";
+
+}
+
+function openCalls(){
+
+window.location.href="calls.html";
+
+}
+
+function openAdd(){
+
+window.location.href="add-new.html";
+
+}
+
+function exitApp(){
+
+window.close();
+
+}
+
+</script>
+
+</body>
+</html>
