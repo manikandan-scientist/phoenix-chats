@@ -1,9 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="phoenix.jpg" class="logo">
+
+<h1>Welcome to Phoenix</h1>
+
+<p>Enter Phone Number</p>
+
+<div class="phone-box">
+  <span>+91</span>
+  <input type="tel" id="phone" placeholder="XXXXXXXXXX">
+</div>
+
+<div id="recaptcha-container"></div>
+
+<p id="error" style="color:red;"></p>
+
+<button class="green-btn" onclick="sendOTP()">Next</button>
+
+</div>
+
+<button class="border-btn" onclick="goBack()">Back</button>
+
 <script>
 
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-f4usYcUBlCaeD-UBAkrSs6Y3xH2Kxl0",
+  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
   projectId: "phoenix-6c3b7",
   storageBucket: "phoenix-6c3b7.appspot.com",
@@ -15,62 +55,60 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 
-/* LOAD RECAPTCHA */
+/* RECAPTCHA */
 
-window.onload = function(){
+window.onload = function () {
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+    "recaptcha-container",
+    {
+      size: "invisible"
+    }
+  );
 
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-'recaptcha-container',
-{
-size:'invisible'
-});
-
-recaptchaVerifier.render();
-
-}
+  window.recaptchaVerifier.render();
+};
 
 
 /* SEND OTP */
 
-function sendOTP(){
+function sendOTP() {
 
-let phone = document.getElementById("phone").value;
-let errorText = document.getElementById("error");
+  let phone = document.getElementById("phone").value;
+  let error = document.getElementById("error");
 
-if(phone.length !== 10){
-errorText.innerText = "Enter valid 10 digit number";
-return;
-}
+  if (phone.length !== 10) {
+    error.innerText = "Enter valid 10 digit number";
+    return;
+  }
 
-let fullNumber = "+91" + phone;
+  let fullNumber = "+91" + phone;
 
-firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
+  firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
+    .then(function (confirmationResult) {
 
-.then(function(confirmationResult){
+      window.confirmationResult = confirmationResult;
 
-window.confirmationResult = confirmationResult;
+      localStorage.setItem("phoneNumber", fullNumber);
+      localStorage.setItem("otpSession", "active");
 
-localStorage.setItem("phoneNumber", fullNumber);
-localStorage.setItem("otpSession", "active");
+      window.location.href = "login.html";
 
-window.location.href = "login.html";
-
-})
-
-.catch(function(error){
-
-console.log(error);
-errorText.innerText = error.message;
-
-});
+    })
+    .catch(function (error) {
+      console.log(error);
+      document.getElementById("error").innerText = error.message;
+    });
 
 }
 
 
-function goBack(){
+/* BACK */
 
-window.location.href="index.html";
-
+function goBack() {
+  window.location.href = "index.html";
 }
 
 </script>
+
+</body>
+</html>
