@@ -63,7 +63,7 @@ if(code.length === 0){
 }
 
 /* 🔥 IMPORTANT FIX */
-let verificationId = localStorage.getItem("verificationId");
+let verificationId = sessionStorage.getItem("verificationId");
 
 if(!verificationId){
   alert("OTP expired. Try again");
@@ -83,7 +83,7 @@ firebase.auth().signInWithCredential(credential)
 
   let user = result.user;
 
-  localStorage.setItem("userUID", user.uid);
+  sessionStorage.removeItem("verificationId");
 
   alert("Login success");
 
