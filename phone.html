@@ -1,40 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<img src="phoenix.jpg" class="logo">
-
-<h1>Welcome to Phoenix</h1>
-
-<p class="subtitle">Enter Phone Number</p>
-
-<div class="phone-box">
-<span>+91</span>
-<input type="tel" id="phone" placeholder="XXXXXXXXXX">
-</div>
-
-<div id="recaptcha-container"></div>
-
-<p id="error" class="error"></p>
-
-<button class="green-btn" onclick="sendOTP()">Next</button>
-
-</div>
-
-<button class="border-btn" onclick="goBack()">Back</button>
-
 <script>
 
 /* FIREBASE CONFIG */
@@ -43,7 +6,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyB-f4usYcUBlCaeD-UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
   projectId: "phoenix-6c3b7",
-  storageBucket: "phoenix-6c3b7.firebasestorage.app",
+  storageBucket: "phoenix-6c3b7.appspot.com",
   messagingSenderId: "914099693715",
   appId: "1:914099693715:web:372c71c13c5c6f060c4566",
   measurementId: "G-5WLB8BML48"
@@ -51,16 +14,21 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* FIXED RECAPTCHA (IMPORTANT) */
+
+/* LOAD RECAPTCHA */
+
+window.onload = function(){
 
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
 'recaptcha-container',
 {
-  size: 'invisible'
-}
-);
+size:'invisible'
+});
 
 recaptchaVerifier.render();
+
+}
+
 
 /* SEND OTP */
 
@@ -77,6 +45,7 @@ return;
 let fullNumber = "+91" + phone;
 
 firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
+
 .then(function(confirmationResult){
 
 window.confirmationResult = confirmationResult;
@@ -84,10 +53,10 @@ window.confirmationResult = confirmationResult;
 localStorage.setItem("phoneNumber", fullNumber);
 localStorage.setItem("otpSession", "active");
 
-/* GO TO LOGIN PAGE */
 window.location.href = "login.html";
 
 })
+
 .catch(function(error){
 
 console.log(error);
@@ -97,11 +66,11 @@ errorText.innerText = error.message;
 
 }
 
+
 function goBack(){
+
 window.location.href="index.html";
+
 }
 
 </script>
-
-</body>
-</html>
