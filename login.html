@@ -33,7 +33,7 @@
 /* FIREBASE CONFIG */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-f4usYcUBlCaeD-UBAkrSs6Y3xH2Kxl0",
+  apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
   projectId: "phoenix-6c3b7",
   storageBucket: "phoenix-6c3b7.firebasestorage.app",
@@ -47,44 +47,54 @@ firebase.initializeApp(firebaseConfig);
 /* SESSION CHECK */
 
 if(!localStorage.getItem("otpSession")){
-alert("Session expired");
-window.location.href="phone.html";
+  alert("Session expired");
+  window.location.href="phone.html";
 }
 
-/* VERIFY OTP */
+/* VERIFY OTP (FIXED VERSION) */
 
 function verifyOTP(){
 
 let code = document.getElementById("code").value;
 
 if(code.length === 0){
-alert("Enter OTP");
-return;
+  alert("Enter OTP");
+  return;
 }
 
-let confirmationResult = window.confirmationResult;
+/* 🔥 IMPORTANT FIX */
+let verificationId = localStorage.getItem("verificationId");
 
-if(!confirmationResult){
-alert("OTP expired. Try again");
-window.location.href="phone.html";
-return;
+if(!verificationId){
+  alert("OTP expired. Try again");
+  window.location.href="phone.html";
+  return;
 }
 
-confirmationResult.confirm(code)
+/* CREATE CREDENTIAL */
+let credential = firebase.auth.PhoneAuthProvider.credential(
+  verificationId,
+  code
+);
+
+/* LOGIN */
+firebase.auth().signInWithCredential(credential)
 .then(function(result){
 
-let user = result.user;
+  let user = result.user;
 
-localStorage.setItem("userUID", user.uid);
+  localStorage.setItem("userUID", user.uid);
 
-alert("Login success");
+  alert("Login success");
 
-window.location.href="create-profile.html";
+  window.location.href="create-profile.html";
 
 })
 .catch(function(error){
-alert("Invalid OTP");
-console.log(error);
+
+  console.log(error);
+  alert("Invalid or expired OTP");
+
 });
 
 }
