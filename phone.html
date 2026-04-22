@@ -41,7 +41,6 @@
 <script>
 
 /* FIREBASE CONFIG */
-
 const firebaseConfig = {
   apiKey: "AIzaSyB-f4usYcUBlCaeD_UBAkrSs6Y3xH2Kxl0",
   authDomain: "phoenix-6c3b7.firebaseapp.com",
@@ -52,58 +51,57 @@ const firebaseConfig = {
   measurementId: "G-5WLB8BML48"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-
-/* RECAPTCHA */
+/* RECAPTCHA (FIXED SAFE INIT) */
+let recaptchaVerifier;
 
 window.onload = function () {
-  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+  recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
     "recaptcha-container",
     {
       size: "invisible"
     }
   );
 
-  window.recaptchaVerifier.render();
+  recaptchaVerifier.render();
 };
 
 
-/* SEND OTP */
-
+/* SEND OTP (FIXED) */
 function sendOTP() {
 
   let phone = document.getElementById("phone").value;
   let error = document.getElementById("error");
 
-  if (phone.length !== 10) {
+  if (!phone || phone.length !== 10) {
     error.innerText = "Enter valid 10 digit number";
     return;
   }
 
   let fullNumber = "+91" + phone;
 
-  firebase.auth().signInWithPhoneNumber(fullNumber, window.recaptchaVerifier)
+  firebase.auth().signInWithPhoneNumber(fullNumber, recaptchaVerifier)
     .then(function (confirmationResult) {
 
-      window.confirmationResult = confirmationResult;
+      // ⭐ IMPORTANT FIX: safe store
+      sessionStorage.setItem("verificationId", confirmationResult.verificationId);
 
-      localStorage.setItem("phoneNumber", fullNumber);
-      localStorage.setItem("otpSession", "active");
+      sessionStorage.setItem("phoneNumber", fullNumber);
 
       window.location.href = "login.html";
 
     })
-    .catch(function (error) {
-      console.log(error);
-      document.getElementById("error").innerText = error.message;
+    .catch(function (err) {
+      console.log(err);
+      error.innerText = err.message;
     });
-
 }
 
 
 /* BACK */
-
 function goBack() {
   window.location.href = "index.html";
 }
