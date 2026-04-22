@@ -15,7 +15,7 @@
 
 <h2>Import Contacts</h2>
 
-<input type="file" accept=".csv" onchange="loadContacts(this.files[0])">
+<input type="file" accept=".csv" id="csvFile">
 
 <br><br>
 
@@ -25,32 +25,41 @@
 
 <script>
 
-function loadContacts(file){
+document.getElementById("csvFile").addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+if(!file){
+alert("Select CSV file");
+return;
+}
 
 const reader = new FileReader();
 
-reader.onload = function(e){
+reader.onload = function(event){
 
-let text = e.target.result;
+let text = event.target.result;
 
-let rows = text.split("\n");
+/* FIXED LINE SPLIT */
+let rows = text.trim().split(/\r?\n/);
 
 let list = document.getElementById("contactList");
 
-list.innerHTML="";
+list.innerHTML = "";
 
+/* Skip header */
 rows.slice(1).forEach(function(row){
 
-let data=row.split(",");
+let cols = row.split(",");
 
-let name=data[0];
-let phone=data[1];
+let name = cols[0];
+let phone = cols[1];
 
 if(name && phone){
 
-let li=document.createElement("li");
+let li = document.createElement("li");
 
-li.innerText=name+" - "+phone;
+li.innerText = name + " - " + phone;
 
 list.appendChild(li);
 
@@ -62,7 +71,7 @@ list.appendChild(li);
 
 reader.readAsText(file);
 
-}
+});
 
 </script>
 
