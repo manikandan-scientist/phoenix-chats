@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Import Contacts</title>
+
+<link rel="stylesheet" href="home.css">
+
+</head>
+
+<body>
+
+<div style="padding:20px">
+
+<h2>Import Contacts</h2>
+
+<input type="file" accept=".csv" onchange="loadContacts(this.files[0])">
+
+<br><br>
+
+<ul id="contactList"></ul>
+
+</div>
+
+<script>
+
+function loadContacts(file){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+let text = e.target.result;
+
+let rows = text.split("\n");
+
+let list = document.getElementById("contactList");
+
+list.innerHTML="";
+
+rows.slice(1).forEach(function(row){
+
+let data=row.split(",");
+
+let name=data[0];
+let phone=data[1];
+
+if(name && phone){
+
+let li=document.createElement("li");
+
+li.innerText=name+" - "+phone;
+
+list.appendChild(li);
+
+}
+
+});
+
+};
+
+reader.readAsText(file);
+
+}
+
+</script>
+
+</body>
+</html>
